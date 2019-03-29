@@ -8,15 +8,11 @@
 // Constructors //
 //--------------//
 
-SignalGenerator::SignalGenerator(const SignalType& type, const Timer& timer, DigitalPin real, DigitalPin imaginary)
+SignalGenerator::SignalGenerator(const Timer& timer)
 : _type(type),
   _timer(timer)
 {
 	Serial.println("Signal Generator here!");
-	if(!validate(real, imaginary))
-	{
-		// TODO: something went wrong: emit an exception or fail.
-	}
 }
 
 SignalGenerator::~SignalGenerator()
@@ -31,17 +27,7 @@ auto SignalGenerator::print() -> void
 	Serial.println("---------------------");
 	Serial.println("Signal Generator v1.0");
 	Serial.println("---------------------");
-	Serial.print("Signal Type: ");
-	switch(_type)
-	{
-		case SignalType::REAL:
-			Serial.println("Real");
-			break;
-		case SignalType::COMPLEX:
-			Serial.println("Complex");
-			break;
-	}
-	
+
 	Serial.print("Timer Used: ");
 	switch(_timer)
 	{
@@ -49,11 +35,7 @@ auto SignalGenerator::print() -> void
 			Serial.println("Timer 0");
 			break;
 		case Timer::T1:
-			Serial.print("Timer 1 (Real Pin = ");
-			Serial.print(_real);
-			Serial.print("; Imaginary Pin = ");
-			Serial.print(_imaginary);
-			Serial.println(")");
+			Serial.print("Timer 1");
 			break;
 		case Timer::T2:
 			Serial.println("Timer 2");
@@ -65,6 +47,7 @@ auto SignalGenerator::print() -> void
 // Private Functions //
 //-------------------//
 
+/*
 auto SignalGenerator::validate(DigitalPin real, DigitalPin imaginary) -> bool
 {
 	// Check validity of pins
@@ -85,4 +68,5 @@ auto SignalGenerator::validate(DigitalPin real, DigitalPin imaginary) -> bool
 	
 	return true;
 }
+*/
 

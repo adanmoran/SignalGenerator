@@ -59,23 +59,16 @@ enum class ArduinoSize
 	UNO,
 	DUE
 };
-
-/*
-Specify whether the signal is real or complex.
-*/
-enum class SignalType
-{
-	REAL,
-	COMPLEX
-};
 	
-template<ArduinoSize A>
+/* Base SignalGenerator class
+ * This will be extended into Real and Complex signal generators
+ */
 class SignalGenerator
 {
 	public:
 		
 		
-	SignalGenerator(const SignalType& type, const Timer& timer, DigitalPin real, DigitalPin imaginary = -1);
+	SignalGenerator(const Timer& timer);
 	~SignalGenerator();
 	
 	/**
@@ -85,18 +78,25 @@ class SignalGenerator
 	 */
 	auto print() -> void;
 	
-	private:
-	
 	/**
-	 * Ensure the inputs to the signal generator are valid for the given 
-	 * signal type and timer.
+	 * Read which timer the signal generator is using`
 	 */
-	auto validate(DigitalPin real, DigitalPin imaginary) -> bool;
+	auto timer() -> const Timer& 
+	{ return timer_; }
 	
-	SignalType _type;
+	private:
 	Timer _timer;
-	DigitalPin _real;
-	DigitalPin _imaginary;
 };
+
+/* RealSignalGenerator
+ * Uses the timer from the SignalGenerator class and generates
+ * a real-valued signal.
+ */
+ 
+ // TODO: the signal should always be on a hardwware pin (no ISR routines here). How do we enforce that? How do users choose whether it's on PIN_A,B, or C??? 
+ // TODO: the signal should have a default frequency, plus they should be allowed to modify the frequency at runtime. How to do this?
+ // TODO: make a complex signal generator that uses two real signal generators, and allow the user to choose PIN_A, B, or C as the real and another as complex.
+ // TODO: These should all be templates with the ArduinoSize as a template parameter. Should it instead be an input to the constructor?
+ 
 
 #endif
